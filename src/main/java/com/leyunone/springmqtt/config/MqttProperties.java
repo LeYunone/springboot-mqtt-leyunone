@@ -2,7 +2,6 @@ package com.leyunone.springmqtt.config;
 
 import com.sun.istack.internal.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +27,42 @@ public class MqttProperties {
     private int keepalive;
 
     private String ssl;
+    
+    private int timeout;
 
     private List<MqttTopic> topics = new ArrayList<>();
 
 
-    static class MqttTopic {
+    public static class MqttTopic {
 
         @NotNull
         private String topic;
 
         private int qos;
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public void setTopic(String topic) {
+            this.topic = topic;
+        }
+
+        public int getQos() {
+            return qos;
+        }
+
+        public void setQos(int qos) {
+            this.qos = qos;
+        }
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
     }
 
     public String getUrl() {
