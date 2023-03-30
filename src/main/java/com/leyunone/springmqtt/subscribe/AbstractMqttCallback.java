@@ -21,7 +21,6 @@ public abstract class AbstractMqttCallback implements MqttMessageCallback {
     private MqttAutoSubscribe mqttAutoSubscribe;
 
     public AbstractMqttCallback() {
-
     }
 
     @Override
@@ -62,7 +61,7 @@ public abstract class AbstractMqttCallback implements MqttMessageCallback {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        logger.info("matt client is delivery...==");
     }
 
 }

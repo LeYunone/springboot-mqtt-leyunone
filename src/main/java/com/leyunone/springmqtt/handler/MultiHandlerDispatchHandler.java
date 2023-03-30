@@ -28,7 +28,7 @@ public class MultiHandlerDispatchHandler extends MqttMessageDispatchHandler impl
     private final List <ConsumerHandler> consumerHandlers = new ArrayList<>();
 
     @Override
-    public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
+    public void messageArrived(String topic, MqttMessage mqttMessage) {
         consumerHandlers.forEach(h -> {
             try {
                 String pattern = h.pattern;
@@ -44,7 +44,7 @@ public class MultiHandlerDispatchHandler extends MqttMessageDispatchHandler impl
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         Map<String, Object> handlerArray = context.getBeansWithAnnotation(MqttConsumerHandler.class);
         logger.info("mqtt consumer handler list {}",handlerArray.keySet());
         if(handlerArray.size() == 0){
