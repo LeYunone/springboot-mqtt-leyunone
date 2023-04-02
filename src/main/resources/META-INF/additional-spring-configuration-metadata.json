@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "spring.mqtt.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Enables mqtt functionality.",
+      "defaultValue": "true"
+    }
+  ]
+}
