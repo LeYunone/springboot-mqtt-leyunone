@@ -14,7 +14,7 @@
 1. 导入spring-mqtt-starter包
 ```
 <dependency>
-    <groupId>com.gvs.iot</groupId>
+    <groupId>com.leyunone</groupId>
     <artifactId>spring-mqtt-starter</artifactId>
     <version>1.0.0-RELEASE</version>
 </dependency>
