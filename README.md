@@ -15,7 +15,7 @@
 ```
 <dependency>
     <groupId>com.leyunone</groupId>
-    <artifactId>spring-mqtt-starter</artifactId>
+    <artifactId>spring-mqtt</artifactId>
     <version>1.0.0-RELEASE</version>
 </dependency>
 ```

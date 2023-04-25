@@ -1,6 +1,5 @@
 package com.leyunone.springmqtt.config;
 
-import com.sun.istack.internal.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class MqttProperties {
 
     public static class MqttTopic {
 
-        @NotNull
         private String topic;
 
         private int qos;

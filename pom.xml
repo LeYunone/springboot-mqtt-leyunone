@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.leyunone</groupId>
     <artifactId>spring-mqtt</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>spring-mqtt</name>
     <description>springboot-集成mqtt</description>
     <properties>
@@ -57,9 +57,9 @@
 
     <profiles>
         <profile>
-            <!--注意,此id必须与setting.xml中指定的一致,不要自作聪明改它名字-->
-            <id>ossrh</id>
-            <!--            <id>release</id>-->
+            <!--此id必须与setting.xml中指定的一致-->
+<!--            <id>ossrh</id>-->
+                        <id>release</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -68,30 +68,29 @@
                 <pluginManagement>
                     <plugins>
                         <!--测试包插件-->
-                        <plugin>
-                            <groupId>org.sonatype.plugins</groupId>
-                            <artifactId>nexus-staging-maven-plugin</artifactId>
-                            <version>1.6.7</version>
-                            <extensions>true</extensions>
-                            <configuration>
-                                <serverId>ossrh</serverId>
-                                <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                                <!--                                <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-                            </configuration>
-                        </plugin>
-
+<!--                        <plugin>-->
+<!--                            <groupId>org.sonatype.plugins</groupId>-->
+<!--                            <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--                            <version>1.6.7</version>-->
+<!--                            <extensions>true</extensions>-->
+<!--                            <configuration>-->
+<!--                                <serverId>ossrh</serverId>-->
+<!--                                <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+<!--                                &lt;!&ndash;                                <autoReleaseAfterClose>true</autoReleaseAfterClose>&ndash;&gt;-->
+<!--                            </configuration>-->
+<!--                        </plugin>-->
                         <!--正式环境插件-->
-                        <!--                        <plugin>-->
-                        <!--                            <groupId>org.apache.maven.plugins</groupId>-->
-                        <!--                            <artifactId>maven-release-plugin</artifactId>-->
-                        <!--                            <version>2.5.3</version>-->
-                        <!--                            <configuration>-->
-                        <!--                                <autoVersionSubmodules>true</autoVersionSubmodules>-->
-                        <!--                                <useReleaseProfile>false</useReleaseProfile>-->
-                        <!--                                <releaseProfiles>release</releaseProfiles>-->
-                        <!--                                <goals>deploy</goals>-->
-                        <!--                            </configuration>-->
-                        <!--                        </plugin>-->
+                                                <plugin>
+                                                    <groupId>org.apache.maven.plugins</groupId>
+                                                    <artifactId>maven-release-plugin</artifactId>
+                                                    <version>2.5.3</version>
+                                                    <configuration>
+                                                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                                                        <useReleaseProfile>false</useReleaseProfile>
+                                                        <releaseProfiles>release</releaseProfiles>
+                                                        <goals>deploy</goals>
+                                                    </configuration>
+                                                </plugin>
 
 
                         <!--生成API文档插件-->
