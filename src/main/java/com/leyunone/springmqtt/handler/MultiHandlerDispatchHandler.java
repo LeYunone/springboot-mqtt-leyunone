@@ -46,15 +46,14 @@ public class MultiHandlerDispatchHandler extends MqttMessageDispatchHandler impl
     @Override
     public void afterPropertiesSet() {
         Map<String, Object> handlerArray = context.getBeansWithAnnotation(MqttConsumerHandler.class);
-        logger.info("mqtt consumer handler list {}",handlerArray.keySet());
         if(handlerArray.size() == 0){
-            throw new NullPointerException("mqtt consumer bean is empty...");
+            throw new RuntimeException("mqtt consumer loading fail because consumer is empty.");
         }
         handlerArray.forEach((k,v) -> {
             Class<?> aClass = v.getClass();
             Method[] methods = aClass.getMethods();
             if(methods.length == 0){
-                throw new NullPointerException("mqtt consumer handler method is empty,handler "+k);
+                throw new RuntimeException("mqtt consumer loading fail because consumer is empty.");
             }
             Method mqttMessageHandlerMethod = null;
             for(Method method :methods){
