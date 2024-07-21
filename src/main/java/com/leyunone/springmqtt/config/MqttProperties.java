@@ -26,7 +26,7 @@ public class MqttProperties {
     private int keepalive;
 
     private String ssl;
-    
+
     private int timeout;
 
     private List<MqttTopic> topics = new ArrayList<>();

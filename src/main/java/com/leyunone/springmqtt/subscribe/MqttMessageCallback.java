@@ -14,12 +14,14 @@ public interface MqttMessageCallback extends MqttCallback {
 
     /**
      * 设置mqtt消费者用于重连后的重新订阅
+     *
      * @param mqttAutoSubscribe
      */
     void setMqttAutoSubscribe(MqttAutoSubscribe mqttAutoSubscribe);
 
     /**
      * 设置客户端
+     *
      * @param mqttAsyncClient
      */
     void setMqttAsyncClient(MqttAsyncClient mqttAsyncClient);

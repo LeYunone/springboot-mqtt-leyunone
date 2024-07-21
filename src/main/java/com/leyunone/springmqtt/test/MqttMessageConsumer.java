@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class MqttMessageConsumer {
 
     private final static Logger logger = LoggerFactory.getLogger(MqttMessageConsumer.class);
-    
+
     @MqttSubscribe(topic = "指定的topic主题")
     public void messageAccept(String topic, MqttMessage message) {
         logger.info("MQTT message receive topic:{},message:{}", topic, message.toString());

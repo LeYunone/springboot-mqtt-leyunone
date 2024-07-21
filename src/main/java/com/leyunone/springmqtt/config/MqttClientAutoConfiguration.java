@@ -32,7 +32,7 @@ import java.time.Clock;
 @ConditionalOnProperty(value = "spring.mqtt.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(MqttProperties.class)
 public class MqttClientAutoConfiguration {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(MqttClientAutoConfiguration.class);
 
     @Bean
@@ -53,7 +53,7 @@ public class MqttClientAutoConfiguration {
         if (null != mqttProperties.getSsl()) {
             options.setSocketFactory(SslUtil.getSslSocktet(mqttProperties.getSsl()));
         }
-//        options.setMqttVersion(MQTT_VERSION_3_1_1);
+        options.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
         return options;
     }
 
@@ -68,39 +68,40 @@ public class MqttClientAutoConfiguration {
             long startTime = Clock.systemDefaultZone().millis();
             long timeout = mqttProperties.getTimeout() * 1000;
             long endTime = startTime;
-            while (!successful && (endTime - startTime) <= timeout){
+            while (!successful && (endTime - startTime) <= timeout) {
                 Thread.sleep(10);
                 successful = sampleClient.isConnected();
                 endTime = Clock.systemDefaultZone().millis();
             }
-            if(!successful){
+            if (!successful) {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("mqtt client connect is timeout");
             }
-            logger.info("mqtt client connect is success.url: {},client id: {}",mqttProperties.getUrl(),mqttProperties.getClientId());
-        }catch (Exception e){
-            logger.error("mqtt client connect is failed. url: {},client id: {}",mqttProperties.getUrl(),mqttProperties.getClientId(),e);
+            logger.info("mqtt client connect is success.url: {},client id: {}", mqttProperties.getUrl(), mqttProperties.getClientId());
+        } catch (Exception e) {
+            logger.error("mqtt client connect is failed. url: {},client id: {}", mqttProperties.getUrl(), mqttProperties.getClientId(), e);
         }
-        
+
         return sampleClient;
-        
+
     }
 
 
     @Bean
-    public MqttMessageDispatchHandler mqttMessageDispatchHandler(){
+    public MqttMessageDispatchHandler mqttMessageDispatchHandler() {
         return new MultiHandlerDispatchHandler();
     }
 
     /**
      * 自动订阅
-     * @param mqttProperties mqtt配置
+     *
+     * @param mqttProperties  mqtt配置
      * @param mqttAsyncClient mqtt客户端
      * @return 订阅实现
      */
     @ConditionalOnMissingBean({MqttAutoSubscribe.class})
     @Bean
-    public MqttAutoSubscribe mqttAutoSubscribe(MqttProperties mqttProperties,MqttAsyncClient mqttAsyncClient,MqttMessageDispatchHandler dispatchHandler){
-        return new MqttAutoSubscribe(mqttProperties, mqttAsyncClient,dispatchHandler);
+    public MqttAutoSubscribe mqttAutoSubscribe(MqttProperties mqttProperties, MqttAsyncClient mqttAsyncClient, MqttMessageDispatchHandler dispatchHandler) {
+        return new MqttAutoSubscribe(mqttProperties, mqttAsyncClient, dispatchHandler);
     }
 }

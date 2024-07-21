@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @Author leyunone
  * @Date 2023-03-28
  * @Version
- * @Description mqtt回调抽象类型,并实现基本的重连等方法
+ * @Description mqtt回调抽象类型, 并实现基本的重连等方法
  */
 public abstract class AbstractMqttCallback implements MqttMessageCallback {
 
@@ -35,27 +35,28 @@ public abstract class AbstractMqttCallback implements MqttMessageCallback {
 
     /**
      * 重连
+     *
      * @param cause 连接丢失异常信息
      */
     @Override
     public void connectionLost(Throwable cause) {
-        logger.warn("mqtt client connection lost,exception message",cause);
+        logger.warn("mqtt client connection lost,exception message", cause);
         try {
             boolean connected = mqttAsyncClient.isConnected();
-            if(connected){
+            if (connected) {
                 mqttAsyncClient.disconnect();
             }
             mqttAsyncClient.reconnect();
             connected = mqttAsyncClient.isConnected();
-            while (!connected){
+            while (!connected) {
                 connected = mqttAsyncClient.isConnected();
             }
             logger.info("mqtt client retry connect success");
-            if(null != this.mqttAutoSubscribe){
+            if (null != this.mqttAutoSubscribe) {
                 mqttAutoSubscribe.afterPropertiesSet();
             }
-        }catch (Exception e){
-            logger.error("mqtt client retry connect failed.exception message",e);
+        } catch (Exception e) {
+            logger.error("mqtt client retry connect failed.exception message", e);
         }
     }
 

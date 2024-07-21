@@ -3,6 +3,7 @@ package com.leyunone.springmqtt.subscribe;
 import com.leyunone.springmqtt.config.MqttProperties;
 import com.leyunone.springmqtt.handler.MqttMessageDispatchHandler;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,12 +38,15 @@ public class MqttAutoSubscribe implements InitializingBean {
         this.dispatchHandler = dispatchHandler;
     }
 
-
-    @Override
-    public void afterPropertiesSet() {
+    public void loadTopic() throws MqttException {
         if (Thread.interrupted()) {
             return;
         }
+        boolean connected = mqttAsyncClient.isConnected();
+        if (connected) {
+            //断开重新加载
+        }
+
         List<MqttProperties.MqttTopic> mqttTopics = mqttProperties.getTopics();
         if (CollectionUtils.isEmpty(mqttTopics)) {
             logger.warn("subscribe topic is blank.subscribe stop");
@@ -63,10 +67,16 @@ public class MqttAutoSubscribe implements InitializingBean {
             dispatchHandler.setMqttAsyncClient(mqttAsyncClient);
             mqttAsyncClient.setCallback(dispatchHandler);
             mqttAsyncClient.subscribe(topics, qos);
+            mqttAsyncClient.connect();
             logger.info("subscribe success topic:{}", Arrays.toString(topics));
         } catch (Exception e) {
             logger.error("subscribe failed...", e);
         }
+    }
+
+    @Override
+    public void afterPropertiesSet() throws MqttException {
+        this.loadTopic();
     }
 
 

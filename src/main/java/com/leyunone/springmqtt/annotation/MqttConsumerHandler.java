@@ -21,6 +21,7 @@ public @interface MqttConsumerHandler {
 
     /**
      * bean对象名
+     *
      * @return
      */
     @AliasFor(annotation = Component.class)
