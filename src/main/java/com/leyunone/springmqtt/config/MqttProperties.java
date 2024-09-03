@@ -29,6 +29,8 @@ public class MqttProperties {
 
     private int timeout;
 
+    private WillInfo will;
+
     private List<MqttTopic> topics = new ArrayList<>();
 
 
@@ -53,6 +55,62 @@ public class MqttProperties {
         public void setQos(int qos) {
             this.qos = qos;
         }
+    }
+
+    public static class WillInfo {
+
+        private String topic;
+
+        private String message;
+
+        private int qos;
+
+        private boolean retain;
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public WillInfo setTopic(String topic) {
+            this.topic = topic;
+            return this;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public WillInfo setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public int getQos() {
+            return qos;
+        }
+
+        public WillInfo setQos(int qos) {
+            this.qos = qos;
+            return this;
+        }
+
+        public boolean isRetain() {
+            return retain;
+        }
+
+        public WillInfo setRetain(boolean retain) {
+            this.retain = retain;
+            return this;
+        }
+    }
+
+    public WillInfo getWill() {
+        return will;
+    }
+
+    public MqttProperties setWill(WillInfo will) {
+        this.will = will;
+        return this;
     }
 
     public int getTimeout() {

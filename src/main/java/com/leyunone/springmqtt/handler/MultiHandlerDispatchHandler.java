@@ -27,8 +27,9 @@ public class MultiHandlerDispatchHandler extends MqttMessageDispatchHandler impl
 
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) {
-        if (consumerHandlers.containsKey(topic)) {
-            ConsumerHandler consumerHandler = consumerHandlers.get(topic);
+        //前缀匹配
+        consumerHandlers.entrySet().stream().filter((entry) -> Pattern.matches(entry.getKey(), topic)).forEach(entry -> {
+            ConsumerHandler consumerHandler = entry.getValue();
             try {
                 consumerHandler.getHandleMethod().invoke(consumerHandler.getBeanObject(), topic, mqttMessage);
                 logger.debug("The data of this topic {} is consumed by this handler {}", topic, consumerHandler.getBeanName());
@@ -36,7 +37,7 @@ public class MultiHandlerDispatchHandler extends MqttMessageDispatchHandler impl
             } catch (IllegalAccessException | InvocationTargetException e) {
                 logger.error("An exception occurred when calling the handler method,handler {} method {}", consumerHandler.getBeanName(), consumerHandler.getHandleMethod().getName());
             }
-        }
+        });
     }
 
     @Override

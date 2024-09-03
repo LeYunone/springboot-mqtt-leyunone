@@ -37,10 +37,6 @@ public class MqttClientAutoConfiguration {
 
     @Bean
     public MqttConnectOptions mqttConnectOptions(MqttProperties mqttProperties) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
-        return getMqttConnectOption(mqttProperties);
-    }
-
-    private MqttConnectOptions getMqttConnectOption(MqttProperties mqttProperties) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setUserName(mqttProperties.getUsername());
         options.setServerURIs(new String[]{mqttProperties.getUrl()});
@@ -50,6 +46,10 @@ public class MqttClientAutoConfiguration {
         options.setAutomaticReconnect(true);
         options.setMaxInflight(10000);
         options.setConnectionTimeout(120);
+        if (null != mqttProperties.getWill()) {
+            MqttProperties.WillInfo will = mqttProperties.getWill();
+            options.setWill(will.getTopic(), will.getMessage().getBytes(), will.getQos(), will.isRetain());
+        }
         if (null != mqttProperties.getSsl()) {
             options.setSocketFactory(SslUtil.getSslSocktet(mqttProperties.getSsl()));
         }

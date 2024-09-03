@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @date 2023-06-24
  */
 @Service
-public class MqttSubscribeService {
+public class MqttEMQXV5ApiUtil {
 
     @Autowired
     private MqttAsyncClient mqttAsyncClient;
